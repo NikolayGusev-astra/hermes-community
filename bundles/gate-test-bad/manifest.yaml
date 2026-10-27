@@ -1,0 +1,16 @@
+schema: hermes-bundle/1
+name: gate-test-bad
+title: Проверка гейта
+summary: Набор с заведомой инъекцией, чтобы убедиться, что CI блокирует.
+license: MIT
+authors:
+  - name: Тест
+    github: test
+risk:
+  network: false
+  credentials: false
+  money: false
+  filesystem: false
+  shell: false
+entry:
+  soul: soul.md
