@@ -1,0 +1,57 @@
+name: gate
+
+on:
+  pull_request:
+    paths:
+      - "bundles/**"
+      - "tools/**"
+      - ".github/workflows/gate.yml"
+  push:
+    branches: [main]
+    paths:
+      - "bundles/**"
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Установить зависимости
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyyaml
+
+      # skills_guard лежит в репозитории Hermes Agent. Ставим его отдельно, чтобы
+      # поведенческий слой работал и не зависел от локальной установки автора.
+      - name: Получить skills_guard
+        run: |
+          git clone --depth 1 https://github.com/NousResearch/hermes-agent.git /tmp/hermes-agent
+          echo "HERMES_AGENT_DIR=/tmp/hermes-agent" >> "$GITHUB_ENV"
+
+      - name: gitleaks
+        run: |
+          curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks_linux_x64.tar.gz \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Гейт по изменённым bundle
+        run: python tools/gate.py --changed
+
+      - name: Гейт по всем bundle
+        run: |
+          if [ -d bundles ] && [ -n "$(ls -A bundles 2>/dev/null)" ]; then
+            for d in bundles/*/; do
+              case "$d" in *"_template"*) continue ;; esac
+              python tools/gate.py "$d"
+            done
+          fi

@@ -1,0 +1,59 @@
+name: Предложить набор
+description: Рассказать о наборе, который хочется опубликовать
+title: "bundle: "
+labels: ["bundle-proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Форма нужна, чтобы понять набор до кода. Если уже готов PR — заполняй
+        его, а не эту форму.
+
+  - type: input
+    id: name
+    attributes:
+      label: Название набора
+      description: Латиницей, через дефис. Например market-analyst.
+    validations:
+      required: true
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Что решает
+      description: Одно предложение с результатом. «Считает юнит-экономику на Ozon», а не «помогает с аналитикой».
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: risk
+    attributes:
+      label: Что набор трогает
+      options:
+        - label: ходит в интернет
+        - label: нужны ключи или токены
+        - label: трогает деньги, сделки, заказы
+        - label: пишет файлы вне своего каталога
+        - label: запускает команды оболочки
+
+  - type: textarea
+    id: contents
+    attributes:
+      label: Что внутри
+      description: soul.md, AGENT.md, скиллы, профиль — что именно приносишь.
+    validations:
+      required: true
+
+  - type: input
+    id: license
+    attributes:
+      label: Лицензия
+      description: Под какой разрешаешь раздавать. Если не знаешь — напиши «не знаю», предложим MIT.
+    validations:
+      required: true
+
+  - type: textarea
+    id: origin
+    attributes:
+      label: Откуда взялось
+      description: Своё, форк, собрано из чужих скиллов? Для чужого нужна лицензия, разрешающая раздачу.

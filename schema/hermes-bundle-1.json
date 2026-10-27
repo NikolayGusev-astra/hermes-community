@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hermes-agent.ru/schema/hermes-bundle-1.json",
+  "title": "hermes-bundle/1",
+  "description": "Манифест набора для каталога hermes-community. Гейт проверяет те же правила кодом; эта схема нужна редакторам и авторам.",
+  "type": "object",
+  "required": ["schema", "name", "title", "summary", "license", "authors", "risk", "entry"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "hermes-bundle/1" },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]{2,48}$",
+      "description": "Совпадает с именем каталога в bundles/."
+    },
+    "title": { "type": "string", "minLength": 3, "maxLength": 80 },
+    "summary": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 200,
+      "description": "Одно предложение с результатом, не с процессом."
+    },
+    "license": {
+      "enum": [
+        "MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC", "MPL-2.0",
+        "CC0-1.0", "CC-BY-4.0", "CC-BY-SA-4.0", "GPL-3.0-only", "AGPL-3.0-only",
+        "Unlicense"
+      ]
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["name", "github"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "github": { "type": "string", "pattern": "^[A-Za-z0-9-]{1,39}$" }
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "maxItems": 10,
+      "items": { "type": "string", "pattern": "^[a-z0-9-]{2,24}$" }
+    },
+    "risk": {
+      "type": "object",
+      "required": ["network", "credentials", "money", "filesystem", "shell"],
+      "additionalProperties": false,
+      "properties": {
+        "network": { "type": "boolean", "description": "Ходит в интернет." },
+        "credentials": { "type": "boolean", "description": "Нужны ключи, токены, пароли." },
+        "money": { "type": "boolean", "description": "Трогает деньги, сделки, заказы." },
+        "filesystem": { "type": "boolean", "description": "Пишет вне своего каталога." },
+        "shell": { "type": "boolean", "description": "Запускает команды оболочки." }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "soul": { "type": "string", "description": "Путь к soul.md относительно bundle." },
+        "agent": { "type": "string", "description": "Путь к AGENT.md." },
+        "skills": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Каталоги скиллов, каждый содержит SKILL.md."
+        },
+        "profiles": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Конфиги профиля Hermes."
+        }
+      }
+    },
+    "compat": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hermes": { "type": "string", "description": "Например >=1.0" }
+      }
+    },
+    "tested_on": { "type": "string", "maxLength": 200 }
+  }
+}

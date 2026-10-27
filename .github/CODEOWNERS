@@ -1,0 +1,11 @@
+# CODEOWNERS: критичные пути требуют ревью владельца.
+
+# Гейт и CI — правка правил проверки не должна проходить по одному одобрению
+# автора PR, иначе правила можно ослабить в том же PR, который их обходит.
+/tools/                @NikolayGusev-astra
+/.github/              @NikolayGusev-astra
+/docs/                 @NikolayGusev-astra
+
+# Шаблон и упаковщик задают то, что приносят все остальные.
+/bundles/_template/    @NikolayGusev-astra
+/packager/             @NikolayGusev-astra
