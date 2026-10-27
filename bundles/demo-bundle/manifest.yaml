@@ -1,0 +1,23 @@
+schema: hermes-bundle/1
+name: demo-bundle
+title: Демонстрационный набор
+summary: Шаблон, по которому собирается любой bundle. Скопируйте каталог и переименуйте.
+license: MIT
+authors:
+  - name: Ваше Имя
+    github: your-github-login
+tags: [example]
+risk:
+  network: false
+  credentials: false
+  money: false
+  filesystem: false
+  shell: false
+entry:
+  soul: soul.md
+  agent: AGENT.md
+  skills:
+    - skills/example
+compat:
+  hermes: ">=1.0"
+tested_on: не проверялось
