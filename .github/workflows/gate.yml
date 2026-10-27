@@ -5,11 +5,15 @@ on:
     paths:
       - "bundles/**"
       - "tools/**"
+      - "schema/**"
       - ".github/workflows/gate.yml"
   push:
     branches: [main]
     paths:
       - "bundles/**"
+      - "tools/**"
+      - "schema/**"
+      - ".github/workflows/gate.yml"
 
 permissions:
   contents: read
