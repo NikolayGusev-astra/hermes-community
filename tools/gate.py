@@ -332,14 +332,14 @@ def main() -> int:
         if not targets:
             print("Изменённых bundle нет — гейт пропущен.")
             return 0
+    if not targets:
+        ap.error("укажите путь к bundle или --changed")
     # Каталоги с подчёркиванием — образцы и черновики, они не проходят гейт по
     # определению: имя шаблона не совпадает с каталогом, и это нормально.
     targets = [p for p in targets if not p.name.startswith("_")]
     if not targets:
         print("Проверять нечего: все указанные каталоги — образцы.")
         return 0
-    if not args.paths and not args.changed:
-        ap.error("укажите путь к bundle или --changed")
 
     results = [check(p.resolve()) for p in targets]
     if args.json:
